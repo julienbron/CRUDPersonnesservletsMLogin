@@ -1,0 +1,84 @@
+10
+
+dir
+52
+http://svn.ig.he-arc.ch/ftesvn/Cours/trunk/CRUDPersonnesServletsMLogin
+http://svn.ig.he-arc.ch/ftesvn/Cours
+
+
+
+2012-03-07T15:15:49.372790Z
+52
+termine
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+85fa6583-0b52-4905-8eda-bafca29da51d
+
+
+
+
+
+
+0
+
+build.xml
+file
+
+
+
+
+2012-03-07T14:44:56.247000Z
+eebc0fb0cdbffbb30e3939136152603e
+2012-03-07T15:15:49.372790Z
+52
+termine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3535
+
+lib
+dir
+
+nbproject
+dir
+
+src
+dir
+
+test
+dir
+
+web
+dir
+
