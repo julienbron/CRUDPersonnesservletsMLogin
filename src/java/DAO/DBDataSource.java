@@ -15,7 +15,7 @@ import oracle.jdbc.pool.OracleDataSource;
  * @author termine
  */
 public class DBDataSource {
-
+    //testddddddd Romain
     private static OracleDataSource ds = null;
 
     public static Connection getJDBCConnection() {
