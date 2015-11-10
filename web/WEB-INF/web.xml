@@ -34,7 +34,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletCreationPersonne</servlet-name>
-        <url-pattern>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletCreationPersonne</url-pattern>
+        <url-pattern>/ServletCreationPersonne</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletListePersonne</servlet-name>
