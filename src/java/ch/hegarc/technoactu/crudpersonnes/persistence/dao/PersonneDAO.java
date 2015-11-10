@@ -71,9 +71,9 @@ public class PersonneDAO {
         stmt.close();
     }
 
-    public void delete(Person pers) throws SQLException {
+    public void deletePerson(int id) throws SQLException {
         Statement stmt = session.getConnection().createStatement();
-        stmt.executeUpdate("DELETE PERSONNE WHERE NUMERO = "+ pers.getId());
+        stmt.executeUpdate("DELETE PERSONNE WHERE NUMERO = "+ id);
         stmt.close();
     }
 

@@ -1,13 +1,20 @@
+package ch.hegarc.technoactu.crudpersonnes.view.servlet;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
-
-
-import MemoryUser.Utilisateurs;
+import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
+import Model.Personne;
+import ch.hegarc.technoactu.crudpersonnes.business.Person;
+import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,59 +25,49 @@ import javax.servlet.http.HttpSession;
  *
  * @author termine
  */
-public class ServletLogin extends HttpServlet {
+public class ServletEffacerPersonne extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String username = null, password = null;
+
         try {
+            HtmlHttpUtils.doHeader("Etes-vous sur de vouloir effacer la personne ? ", out);
+            if (HtmlHttpUtils.isAuthenticate(request)) {
 
-            HtmlHttpUtils.doHeader("Login Page - Gestion de personnes (CRUD)", out);
-            
-            username = request.getParameter("username");
-            password= request.getParameter("password");
-            boolean errorlogin=false;
-            if (username != null && password != null) {
-                if (!username.equals("") && !password.equals("")) {
+                int id = Integer.getInteger(request.getParameter("id"));
 
+                HttpSession s = request.getSession();
+                PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
 
-                      if(Utilisateurs.verifyUser(username, password)){
-                        //CREATION HTTP SESSION
-                        //request.getRequestDispatcher("/index.jsp").forward(request, response);
-                        HttpSession s= request.getSession(true);
-                        s.setAttribute("username", username);
-                        response.sendRedirect("index.jsp");
-                     }else errorlogin=true;
-              }else errorlogin=true;
-            }else errorlogin=true;
-            
-            if(errorlogin){
-                out.println("<p>Erreur d'authentification, veuillez préciser username , password");
-                out.println("<a href='login.jsp'>reessayer</a>");
-                out.println("</body></html>");
+                Person p = pdao.researchPersonByID(id);
+                out.println("<table>");
+
+                out.println("<tr><td>" + p.getId() + " : " + p.getNom() + " , " + p.getPrenom() + " , " + p.getAdresse() + " , " + p.getVille() + "</td><td><a href='ServletFaireEffacementPersonne?id=" + p.getId() + "'>oui supprimer</a></td></tr>");
+
+                out.println("</table>");
+
             }
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            HtmlHttpUtils.doFooter(out);
         } finally {
             out.close();
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -79,11 +76,16 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletEffacerPersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,11 +94,16 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletEffacerPersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

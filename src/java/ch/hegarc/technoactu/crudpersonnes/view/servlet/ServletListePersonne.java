@@ -1,23 +1,29 @@
-package servlets;
+package ch.hegarc.technoactu.crudpersonnes.view.servlet;
 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import DAO.PersonneDAO;
-import Model.Personne;
+import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
+import ch.hegarc.technoactu.crudpersonnes.business.Person;
+import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author termine
  */
-public class ServletFaireMAJPersonne extends HttpServlet {
+public class ServletListePersonne extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -27,26 +33,33 @@ public class ServletFaireMAJPersonne extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String id = null, nom = null, prenom = null, adresse = null, ville = null;
+        String nom = null, prenom = null, adresse = null, ville = null;
         try {
+            HtmlHttpUtils.doHeader("liste des personnes", out);
+
             if (HtmlHttpUtils.isAuthenticate(request)) {
-                id = request.getParameter("id");
                 nom = request.getParameter("nom");
                 prenom = request.getParameter("prenom");
                 adresse = request.getParameter("adresse");
                 ville = request.getParameter("ville");
+                //ATTENTION EXECUTION DE CROSS SITE SCRIPTING
+                out.println("recherche de "+ nom + " "+ prenom + " "+ adresse +" " + ville+"<br>");
 
-                Personne p = new Personne(Long.parseLong(id), nom, prenom, adresse, ville);
-
-                PersonneDAO pdao = new PersonneDAO();
-
-                pdao.update(p);
-
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                
+                HttpSession s= request.getSession();
+                PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
+                List<Person> personnes = pdao.findAll();
+                out.println("<table>");
+                for (int i = 0; i < personnes.size(); i++) {
+                    Person p = personnes.get(i);
+                    out.println("<tr><td>" + p.getId() + " : " + p.getNom() + " , " + p.getPrenom() + " , " + p.getAdresse() + " , " + p.getVille() + "</td><td><a href='ServletMAJPersonne?id=" + p.getId() + "'>edition</a></td><td><a href='ServletEffacerPersonne?id=" + p.getId() + "'>supprimer</a></td></tr>");
+                }
+                out.println("</table>");
             }
+            HtmlHttpUtils.doFooter(out);
         } finally {
             out.close();
         }
@@ -63,7 +76,11 @@ public class ServletFaireMAJPersonne extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletListePersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 
@@ -76,7 +93,11 @@ public class ServletFaireMAJPersonne extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletListePersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 

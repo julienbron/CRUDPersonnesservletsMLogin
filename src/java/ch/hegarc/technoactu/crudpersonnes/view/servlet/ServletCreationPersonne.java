@@ -1,13 +1,18 @@
+package ch.hegarc.technoactu.crudpersonnes.view.servlet;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+import ch.hegarc.technoactu.crudpersonnes.business.Person;
+import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
 
-
-import MemoryUser.Utilisateurs;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author termine
  */
-public class ServletLogin extends HttpServlet {
+public class ServletCreationPersonne extends HttpServlet {
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,41 +33,35 @@ public class ServletLogin extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String username = null, password = null;
+        String nom = null, prenom = null, adresse = null, ville = null;
         try {
 
-            HtmlHttpUtils.doHeader("Login Page - Gestion de personnes (CRUD)", out);
-            
-            username = request.getParameter("username");
-            password= request.getParameter("password");
-            boolean errorlogin=false;
-            if (username != null && password != null) {
-                if (!username.equals("") && !password.equals("")) {
+            HtmlHttpUtils.doHeader("creation personne", out);
+            if (HtmlHttpUtils.isAuthenticate(request)) {
+                nom = request.getParameter("nom");
+                prenom = request.getParameter("prenom");
+                adresse = request.getParameter("adresse");
+                ville = request.getParameter("ville");
 
-
-                      if(Utilisateurs.verifyUser(username, password)){
-                        //CREATION HTTP SESSION
-                        //request.getRequestDispatcher("/index.jsp").forward(request, response);
-                        HttpSession s= request.getSession(true);
-                        s.setAttribute("username", username);
-                        response.sendRedirect("index.jsp");
-                     }else errorlogin=true;
-              }else errorlogin=true;
-            }else errorlogin=true;
-            
-            if(errorlogin){
-                out.println("<p>Erreur d'authentification, veuillez préciser username , password");
-                out.println("<a href='login.jsp'>reessayer</a>");
-                out.println("</body></html>");
+                if (nom != null && prenom != null) {
+                    if (!nom.equals("") && !prenom.equals("")) {
+                        
+                        HttpSession s= request.getSession();
+                        PersonneDAO p = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
+                        p.createPerson(new Person(nom, prenom, adresse, ville));
+                        out.println("<p>"  + nom + "/" + prenom + "/" + adresse + "/" + ville + "</p>");
+                    } else {
+                        out.println("<p>nom et prenom ne doivent pas etre null !!</p>");
+                    }
+                }
+                /* TODO output your page here
+                out.println("<h1>Servlet ServletCreationPersonne at " + request.getContextPath () + "</h1>");
+                 */
             }
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            HtmlHttpUtils.doFooter(out);
         } finally {
             out.close();
         }
@@ -79,7 +78,11 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCreationPersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 
@@ -92,7 +95,11 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServletCreationPersonne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /** 

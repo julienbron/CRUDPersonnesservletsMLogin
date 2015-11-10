@@ -3,10 +3,11 @@
  * and open the template in the editor.
  */
 
-package servlets;
+package ch.hegarc.technoactu.crudpersonnes.view.servlet;
 
 import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
+
 
 
 
