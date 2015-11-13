@@ -4,6 +4,7 @@
     Author     : termine
 --%>
 
+<%@page import="ch.hegarc.crudpersonnes.services.UtilisateurServices"%>
 <%@include file="includes/header.jsp" %>
 <%@include file="includes/navbar.jsp" %>
 <!-- <a href="recherchePersonne.html">Recherche Personne</a><br>
@@ -38,6 +39,9 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard  <a href="#menu-toggle" class="btn btn-primary btn-sm" id="menu-toggle">Afficher Menu</a></h1> 
                     Tableau de liste de personne à ajouter ici.
+                    
+                    
+                    <%  out.println(UtilisateurServices.afficheUtilisateur());  %>
                   
                 </div>
             </div>
