@@ -4,14 +4,17 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
 import ch.hegarc.technoactu.crudpersonnes.business.Person;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.constant.cons;
+import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +27,10 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletFaireMAJPersonne extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -38,18 +43,32 @@ public class ServletFaireMAJPersonne extends HttpServlet {
         String id = null, nom = null, prenom = null, adresse = null, ville = null;
         try {
             if (HtmlHttpUtils.isAuthenticate(request)) {
+
+                //Récupère les paramètres de la requête
                 id = request.getParameter("id");
                 nom = request.getParameter("nom");
                 prenom = request.getParameter("prenom");
                 adresse = request.getParameter("adresse");
                 ville = request.getParameter("ville");
 
-                Person p = new Person(Long.parseLong(id), nom, prenom, adresse, ville);
-                
-                HttpSession s= request.getSession();
-                PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
+                //Crée la personne
+                Person p = new Person(Integer.parseInt(id), nom, prenom, adresse, ville);
 
-                pdao.updatePerson(p);
+                //Récupère la session
+                HttpSession s = request.getSession();
+
+                //Ouverture de la connexion
+                EntityManagerFactory emf;
+                emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
+                EntityManager em = emf.createEntityManager();
+                PersonService service = new PersonService(em);
+
+                //Mise à jour
+                service.updatePerson(p);
+
+                //Fermeture de la connexion
+                em.close();
+                emf.close();
 
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }
@@ -59,8 +78,9 @@ public class ServletFaireMAJPersonne extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -76,8 +96,9 @@ public class ServletFaireMAJPersonne extends HttpServlet {
         }
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -93,8 +114,9 @@ public class ServletFaireMAJPersonne extends HttpServlet {
         }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

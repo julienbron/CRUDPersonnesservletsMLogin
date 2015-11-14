@@ -4,9 +4,8 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
 import ch.hegarc.technoactu.crudpersonnes.business.Person;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.constant.cons;
 import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,14 +59,14 @@ public class ServletListePersonne extends HttpServlet {
                 
                 //Ouverture de la connexion
                 EntityManagerFactory emf;
-                emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
+                emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
                 PersonService service = new PersonService(em);
                 
                 //Récupère toutes les personnes et les affiches
                 List<Person> personnes = service.findAllPerson();
                 out.print(personnes.size());
-                out.println("<table>");
+                out.println("<table>"); 
                
                 for (int i = 0; i < personnes.size(); i++) {
                     Person p = personnes.get(i);

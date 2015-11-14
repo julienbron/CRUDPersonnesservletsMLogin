@@ -12,7 +12,7 @@ public class Person implements Serializable {
 
     @Id
     @Column(name = "NUMERO")
-    private Long id = null;
+    private Integer id = null;
     @Column(name = "NOM", nullable = false, length = 4000)
     private String nom = null;
     @Column(name = "PRENOM", nullable = false, length = 4000)
@@ -31,18 +31,18 @@ public class Person implements Serializable {
         this.adresse = adresse;
     }
 
-    public Person(final Long id, final String nom, final String prenom, final String adresse, final String ville) {
+    public Person(final Integer id, final String nom, final String prenom, final String adresse, final String ville) {
         this(nom, prenom, adresse);
         this.id = id;
         this.ville = ville;
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -50,7 +50,7 @@ public class Person implements Serializable {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public void setNom(final String nom) {
         this.nom = nom;
     }
 
@@ -58,7 +58,7 @@ public class Person implements Serializable {
         return prenom;
     }
 
-    public void setPrenom(String prenom) {
+    public void setPrenom(final String prenom) {
         this.prenom = prenom;
     }
 
@@ -66,7 +66,7 @@ public class Person implements Serializable {
         return adresse;
     }
 
-    public void setAdresse(String adresse) {
+    public void setAdresse(final String adresse) {
         this.adresse = adresse;
     }
 
@@ -74,7 +74,7 @@ public class Person implements Serializable {
         return ville;
     }
 
-    public void setVille(String ville) {
+    public void setVille(final String ville) {
         this.ville = ville;
     }
 

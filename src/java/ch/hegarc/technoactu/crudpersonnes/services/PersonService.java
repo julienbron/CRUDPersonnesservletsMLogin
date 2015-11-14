@@ -26,7 +26,9 @@ public class PersonService {
     //Create person
     public Person createPerson(final String name, final String lastname, final String adress) {
         Person pers = new Person(name, lastname, adress);
+        em.getTransaction().begin();
         em.persist(pers);
+        em.getTransaction().commit();
         return pers;
     }
 
@@ -34,25 +36,38 @@ public class PersonService {
     public Person findPerson(final int id) {
         return em.find(Person.class, id);
     }
-    
+
     //Get First
     public Person getFirstPersonne() {
-        Person personne = (Person) em.find(Person.class, new Long(1));
-        em.close();
+        Person personne = (Person) em.find(Person.class, new Integer(1));
         return personne;
     }
-    
+
     //Get Collection
-    public List<Person> findAllPerson(){
+    public List<Person> findAllPerson() {
         Query query = em.createQuery("SELECT numero, nom,prenom,adresse,ville FROM personne");
         return (List<Person>) query.getResultList();
     }
-    
+
+    //Update Person
+    public void updatePerson(final Person pers) {
+        Person PersonToUpdate = findPerson(pers.getId());
+        em.getTransaction().begin();
+        PersonToUpdate.setAdresse(pers.getAdresse());
+        PersonToUpdate.setNom(pers.getNom());
+        PersonToUpdate.setPrenom(pers.getPrenom());
+        PersonToUpdate.setVille(pers.getVille());
+        em.getTransaction().commit();
+
+    }
+
     //Remove person
-    public void removePersonne( int id) {
+    public void removePersonne(int id) {
         Person emp = findPerson(id);
-        if (emp!= null){
+        if (emp != null) {
+            em.getTransaction().begin();
             em.remove(emp);
+            em.getTransaction().commit();
         }
     }
 }

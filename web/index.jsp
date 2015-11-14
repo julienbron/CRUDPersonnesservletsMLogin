@@ -4,6 +4,7 @@
     Author     : termine
 --%>
 
+<%@page import="ch.hegarc.technoactu.crudpersonnes.services.UserService"%>
 <%@page import="ch.hegarc.technoactu.crudpersonnes.services.PersonService"%>
 <%@page import="javax.persistence.EntityManager"%>
 <%@page import="javax.persistence.Persistence"%>
@@ -44,16 +45,18 @@
                     <h1 class="page-header">Dashboard  <a href="#menu-toggle" class="btn btn-primary btn-sm" id="menu-toggle">Afficher Menu</a></h1> 
                     Tableau de liste de personne à ajouter ici.
 
-                     <!-- TEST -->
-                    <% 
-                   
-                            EntityManagerFactory emf;
-                            emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
-                            EntityManager em = emf.createEntityManager();
-                            PersonService service = new PersonService(em);
-                            out.print(service.getFirstPersonne().toString());
-                            em.close();
-                            emf.close();
+                    <!-- TEST -->
+                    <%
+
+                        EntityManagerFactory emf;
+                        emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
+                        EntityManager em = emf.createEntityManager();
+                        //   PersonService service = new PersonService(em);
+                        UserService service = new UserService(em);
+                        out.print(service.getFirstUser().toString());
+                        out.print(service.verifyUser("alexandr_ducommun", "alexandr_ducommun"));
+                        em.close();
+                        emf.close();
 
                     %>
 

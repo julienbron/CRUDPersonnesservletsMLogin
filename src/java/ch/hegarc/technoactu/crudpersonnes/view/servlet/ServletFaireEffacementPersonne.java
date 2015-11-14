@@ -4,13 +4,16 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.constant.cons;
+import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,11 +41,25 @@ public class ServletFaireEffacementPersonne extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             if (HtmlHttpUtils.isAuthenticate(request)) {
+                //Récupère les paramètres de la requête
                 int id = Integer.parseInt(request.getParameter("id"));
 
+                //Récupère la session
                 HttpSession s = request.getSession();
-                PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
-                pdao.deletePerson(id);
+ 
+                //Ouverture de la connexion
+                EntityManagerFactory emf;
+                emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
+                EntityManager em = emf.createEntityManager();
+                PersonService service = new PersonService(em);
+ 
+                //PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
+                //pdao.deletePerson(id);
+                service.removePersonne(id);
+
+                //Fermeture de la connexion
+                em.close();
+                emf.close();
 
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             }

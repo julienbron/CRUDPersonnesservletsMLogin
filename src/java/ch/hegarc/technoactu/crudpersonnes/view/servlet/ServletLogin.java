@@ -4,12 +4,13 @@
  */
 package ch.hegarc.technoactu.crudpersonnes.view.servlet;
 
-
-import MemoryUser.Utilisateurs;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.DBConnection;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.constant.cons;
+import ch.hegarc.technoactu.crudpersonnes.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,10 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletLogin extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -37,34 +40,48 @@ public class ServletLogin extends HttpServlet {
         try {
 
             HtmlHttpUtils.doHeader("Login Page - Gestion de personnes (CRUD)", out);
-            
+
+            //Récupère les paramètres de la requête
             username = request.getParameter("username");
-            password= request.getParameter("password");
-            boolean errorlogin=false;
+            password = request.getParameter("password");
+            boolean errorlogin = false;
             if (username != null && password != null) {
                 if (!username.equals("") && !password.equals("")) {
 
-                      //utiliser le dao user
-                      
-                      SessionDB sessionDB = new DBConnection().openSession();
-                      if(Utilisateurs.verifyUser(username, password)){
+                    //Ouverture de la connexion
+                    EntityManagerFactory emf;
+                    emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
+                    EntityManager em = emf.createEntityManager();
+                    UserService service = new UserService(em);
+
+                    // SessionDB sessionDB = new DBConnection().openSession();
+                    if (service.verifyUser(username, password)) {
                         //CREATION HTTP SESSION
                         //request.getRequestDispatcher("/index.jsp").forward(request, response);
-                        HttpSession s= request.getSession(true);
-                        s.setAttribute("sessionDB", sessionDB);
+                        HttpSession s = request.getSession(true);
+                        //s.setAttribute("sessionDB", sessionDB);
                         s.setAttribute("username", username);
+                        
+                        //Fermeture de la connexion
+                        em.close();
+                        emf.close();
+                        
                         response.sendRedirect("index.jsp");
-                     }else errorlogin=true;
-              }else errorlogin=true;
-            }else errorlogin=true;
-            
-            if(errorlogin){
+                    } else {
+                        errorlogin = true;
+                    }
+                } else {
+                    errorlogin = true;
+                }
+            } else {
+                errorlogin = true;
+            }
+
+            if (errorlogin) {
                 out.println("<p>Erreur d'authentification, veuillez préciser username , password");
                 out.println("<a href='login.jsp'>reessayer</a>");
                 out.println("</body></html>");
             }
-
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,8 +91,9 @@ public class ServletLogin extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -87,8 +105,9 @@ public class ServletLogin extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -100,8 +119,9 @@ public class ServletLogin extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

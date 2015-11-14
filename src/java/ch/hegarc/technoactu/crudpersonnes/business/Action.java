@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Model;
+package ch.hegarc.technoactu.crudpersonnes.business;
 
 import java.io.Serializable;
 

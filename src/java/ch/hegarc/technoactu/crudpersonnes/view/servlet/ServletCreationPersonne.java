@@ -4,15 +4,16 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import ch.hegarc.technoactu.crudpersonnes.business.Person;
-import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
-import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
-
+import ch.hegarc.technoactu.crudpersonnes.constant.cons;
+import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,10 @@ import javax.servlet.http.HttpSession;
  */
 public class ServletCreationPersonne extends HttpServlet {
 
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -41,6 +44,7 @@ public class ServletCreationPersonne extends HttpServlet {
 
             HtmlHttpUtils.doHeader("creation personne", out);
             if (HtmlHttpUtils.isAuthenticate(request)) {
+                //Récupère les paramètres de la requête
                 nom = request.getParameter("nom");
                 prenom = request.getParameter("prenom");
                 adresse = request.getParameter("adresse");
@@ -48,17 +52,30 @@ public class ServletCreationPersonne extends HttpServlet {
 
                 if (nom != null && prenom != null) {
                     if (!nom.equals("") && !prenom.equals("")) {
+                        //Récupère la session
+                        HttpSession s = request.getSession();
+
+                        //PersonneDAO p = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
+                        //p.createPerson(new Person(nom, prenom, adresse));
+                        //Ouverture de la connexion
+                        EntityManagerFactory emf;
+                        emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
+                        EntityManager em = emf.createEntityManager();
+                        PersonService service = new PersonService(em);
+
+                        service.createPerson(nom, adresse, adresse);
                         
-                        HttpSession s= request.getSession();
-                        PersonneDAO p = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
-                        p.createPerson(new Person(nom, prenom, adresse));
-                        out.println("<p>"  + nom + "/" + prenom + "/" + adresse + "/" + ville + "</p>");
+                        //Fermeture de la connexion
+                        em.close();
+                        emf.close();
+
+                        out.println("<p>" + nom + "/" + prenom + "/" + adresse + "/" + ville + "</p>");
                     } else {
                         out.println("<p>nom et prenom ne doivent pas etre null !!</p>");
                     }
                 }
                 /* TODO output your page here
-                out.println("<h1>Servlet ServletCreationPersonne at " + request.getContextPath () + "</h1>");
+                 out.println("<h1>Servlet ServletCreationPersonne at " + request.getContextPath () + "</h1>");
                  */
             }
             HtmlHttpUtils.doFooter(out);
@@ -68,8 +85,9 @@ public class ServletCreationPersonne extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,8 +103,9 @@ public class ServletCreationPersonne extends HttpServlet {
         }
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -102,8 +121,9 @@ public class ServletCreationPersonne extends HttpServlet {
         }
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
