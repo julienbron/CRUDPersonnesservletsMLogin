@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.hegarc.crudpersonnes.services;
+package ch.hegarc.technoactu.crudpersonnes.services;
 
-import static java.lang.System.out;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,10 +17,10 @@ public class UtilisateurServices {
 
     private static EntityManagerFactory emf;
     private static EntityManager em;
+     
     
-    
-    //Affiche les utilisateurs
-    public static String  afficheUtilisateur() {
+    //Affiche les utilisateursss
+    public static String  factoryTest() {
 
         emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
         return(("Factory created : " + emf.isOpen()));
@@ -48,4 +47,6 @@ public class UtilisateurServices {
         
 
     }
+    
+
 }

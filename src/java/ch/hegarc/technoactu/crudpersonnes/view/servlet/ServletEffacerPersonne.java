@@ -5,14 +5,11 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
  * and open the template in the editor.
  */
 import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
-import Model.Personne;
 import ch.hegarc.technoactu.crudpersonnes.business.Person;
 import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Vector;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;

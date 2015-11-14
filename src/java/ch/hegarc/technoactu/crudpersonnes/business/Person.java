@@ -1,39 +1,41 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ch.hegarc.technoactu.crudpersonnes.business;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-/**
- *
- * @author termine
- */
+@Entity
+@Table(name = "PERSONNE")
 public class Person implements Serializable {
 
-    private Long id=null;
-    private String nom=null;
-    private String prenom=null;
-    private String adresse=null;
-    private String ville=null;
+    @Id
+    @Column(name = "NUMERO")
+    private Long id = null;
+    @Column(name = "NOM", nullable = false, length = 4000)
+    private String nom = null;
+    @Column(name = "PRENOM", nullable = false, length = 4000)
+    private String prenom = null;
+    @Column(name = "ADRESSE", nullable = false, length = 4000)
+    private String adresse = null;
+    @Column(name = "VILLE", nullable = true, length = 4000)
+    private String ville = null;
 
     public Person() {
     }
 
-    public Person(Long id, String nom, String prenom, String adresse, String ville) {
-        this.id = id;
+    public Person(final String nom, final String prenom, final String adresse) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
-        this.ville = ville;
     }
-    public Person( String nom, String prenom, String adresse, String ville) {
 
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresse = adresse;
+    public Person(final Long id, final String nom, final String prenom, final String adresse, final String ville) {
+        this(nom, prenom, adresse);
+        this.id = id;
         this.ville = ville;
+
     }
 
     public Long getId() {
@@ -75,11 +77,12 @@ public class Person implements Serializable {
     public void setVille(String ville) {
         this.ville = ville;
     }
-    public void print(){
-      System.out.println(this.id+ "-"+this.nom+"-"+this.prenom+"-"+this.adresse+"-"+this.ville);
+
+    public void print() {
+        System.out.println(this.id + "-" + this.nom + "-" + this.prenom + "-" + this.adresse + "-" + this.ville);
     }
 
-     public String toString(){
-      return this.id+ "-"+this.nom+"-"+this.prenom+"-"+this.adresse+"-"+this.ville;
+    public String toString() {
+        return this.id + "-" + this.nom + "-" + this.prenom + "-" + this.adresse + "-" + this.ville;
     }
 }

@@ -7,12 +7,16 @@ package ch.hegarc.technoactu.crudpersonnes.view.servlet;
 import ch.hegarc.technoactu.crudpersonnes.persistence.dao.PersonneDAO;
 import ch.hegarc.technoactu.crudpersonnes.business.Person;
 import ch.hegarc.technoactu.crudpersonnes.persistence.connection.SessionDB;
+import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,32 +36,49 @@ public class ServletListePersonne extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
         String nom = null, prenom = null, adresse = null, ville = null;
         try {
             HtmlHttpUtils.doHeader("liste des personnes", out);
 
             if (HtmlHttpUtils.isAuthenticate(request)) {
+
+                //Récupère les paramètres de la requête
                 nom = request.getParameter("nom");
                 prenom = request.getParameter("prenom");
                 adresse = request.getParameter("adresse");
                 ville = request.getParameter("ville");
+                
                 //ATTENTION EXECUTION DE CROSS SITE SCRIPTING
                 out.println("recherche de "+ nom + " "+ prenom + " "+ adresse +" " + ville+"<br>");
-
+               
+                //Récupère la session
+                HttpSession s = request.getSession();
                 
-                HttpSession s= request.getSession();
-                PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
-                List<Person> personnes = pdao.findAll();
+                //Ouverture de la connexion
+                EntityManagerFactory emf;
+                emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
+                EntityManager em = emf.createEntityManager();
+                PersonService service = new PersonService(em);
+                
+                //Récupère toutes les personnes et les affiches
+                List<Person> personnes = service.findAllPerson();
+                out.print(personnes.size());
                 out.println("<table>");
+               
                 for (int i = 0; i < personnes.size(); i++) {
                     Person p = personnes.get(i);
                     out.println("<tr><td>" + p.getId() + " : " + p.getNom() + " , " + p.getPrenom() + " , " + p.getAdresse() + " , " + p.getVille() + "</td><td><a href='ServletMAJPersonne?id=" + p.getId() + "'>edition</a></td><td><a href='ServletEffacerPersonne?id=" + p.getId() + "'>supprimer</a></td></tr>");
                 }
                 out.println("</table>");
+                
+                //Fermeture de la connexion
+                em.close();
+                emf.close();
+                
             }
             HtmlHttpUtils.doFooter(out);
         } finally {

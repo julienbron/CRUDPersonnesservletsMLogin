@@ -22,7 +22,7 @@ public class User {
     private String email;
     private Date recruited;
     
-    // en attente de la structure de la table
+
     
     
     

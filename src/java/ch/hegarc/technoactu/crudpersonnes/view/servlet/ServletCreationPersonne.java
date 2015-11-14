@@ -51,7 +51,7 @@ public class ServletCreationPersonne extends HttpServlet {
                         
                         HttpSession s= request.getSession();
                         PersonneDAO p = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
-                        p.createPerson(new Person(nom, prenom, adresse, ville));
+                        p.createPerson(new Person(nom, prenom, adresse));
                         out.println("<p>"  + nom + "/" + prenom + "/" + adresse + "/" + ville + "</p>");
                     } else {
                         out.println("<p>nom et prenom ne doivent pas etre null !!</p>");
