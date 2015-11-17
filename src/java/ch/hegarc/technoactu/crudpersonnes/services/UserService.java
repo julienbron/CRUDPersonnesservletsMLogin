@@ -40,15 +40,14 @@ public class UserService {
 
     //Verify User
     public Boolean verifyUser(final String username, final String password) {
-
-        Query query = em.createQuery("SELECT u.numero, u.username,u.password,u.prenom,u.nom,u.ville,u.date_naiss,u.email,u.date_recrut FROM utilisateur u WHERE u.username ='" + username + "' and u.password ='" + password +"'");
-       return query.getResultList().size() == 1;
-      
-        /*TypedQuery<Integer> query = em.createQuery("select u.username from utilisateur u where u.username = :user_name and u.password = :user_password",Integer.class);
-        query.setParameter("user_name", username);
-        query.setParameter("user_password", password);
         
-        return query.getSingleResult() == 1;*/
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT u FROM User u WHERE u.username =?1 and u.password =?2");
+        TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
+        query.setParameter(1, username);
+        query.setParameter(2, password);
+        
+        return query.getResultList().size() == 1;
         
     }
 
