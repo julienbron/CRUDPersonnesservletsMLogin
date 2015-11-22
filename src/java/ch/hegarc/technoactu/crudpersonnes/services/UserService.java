@@ -25,7 +25,7 @@ public class UserService {
     }
 
     //Create user
-    public User createPerson(final String username, final String password) {
+    public User createUser(final String username, final String password) {
         User user = new User(username, password);
         em.getTransaction().begin();
         em.persist(user);
@@ -39,7 +39,7 @@ public class UserService {
     }
 
     //Verify User
-    public Boolean verifyUser(final String username, final String password) {
+    public int verifyUser(final String username, final String password) {
         
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT u FROM User u WHERE u.username =?1 and u.password =?2");
@@ -47,8 +47,29 @@ public class UserService {
         query.setParameter(1, username);
         query.setParameter(2, password);
         
-        return query.getResultList().size() == 1;
+        if (query.getResultList().size() == 1){
+            return query.getSingleResult().getId();
+        }else{
+            return -1;
+        }
         
+        
+    }
+    
+    //Update Person
+    public void updateUser(final User user) {
+        User UserToUpdate = findUser(user.getId());
+        em.getTransaction().begin();
+        UserToUpdate.setUsername(user.getUsername());
+        UserToUpdate.setPassword(user.getPassword());
+        UserToUpdate.setFirstName(user.getFirstName());
+        UserToUpdate.setLastName(user.getLastName());
+        UserToUpdate.setCity(user.getCity());
+        UserToUpdate.setBirthday(user.getBirthday());
+        UserToUpdate.setEmail(user.getEmail());
+        UserToUpdate.setRecruited(user.getRecruited());
+       
+        em.getTransaction().commit();
     }
 
     //Get First

@@ -3,12 +3,12 @@
     <servlet>
         <servlet-name>ServletCreationPersonne</servlet-name>
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletCreationPersonne</servlet-class>
-    </servlet> 
+    </servlet>
     <servlet>
         <servlet-name>ServletListePersonne</servlet-name>
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletListePersonne</servlet-class>
     </servlet>
-    <servlet> 
+    <servlet>
         <servlet-name>ServletEffacerPersonne</servlet-name>
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletEffacerPersonne</servlet-class>
     </servlet>
@@ -31,6 +31,14 @@
     <servlet>
         <servlet-name>ServletLogout</servlet-name>
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletLogout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletVueUtilisateur</servlet-name>
+        <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletVueUtilisateur</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletFaireMAJUtilisateur</servlet-name>
+        <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletFaireMAJUtilisateur</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletCreationPersonne</servlet-name>
@@ -64,6 +72,14 @@
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletVueUtilisateur</servlet-name>
+        <url-pattern>/ServletVueUtilisateur</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletFaireMAJUtilisateur</servlet-name>
+        <url-pattern>/ServletFaireMAJUtilisateur</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -71,5 +87,5 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
-        </welcome-file-list>
-    </web-app>
+    </welcome-file-list>
+</web-app>
