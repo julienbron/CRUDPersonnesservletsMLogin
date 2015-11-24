@@ -9,6 +9,7 @@ import ch.hegarc.technoactu.crudpersonnes.business.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -45,8 +46,7 @@ public class PersonService {
 
     //Get Collection
     public List<Person> findAllPerson() {
-        Query query = em.createQuery("SELECT numero, nom,prenom,adresse,ville FROM personne");
-        return (List<Person>) query.getResultList();
+        return (List<Person>)em.createNativeQuery("SELECT * FROM personne", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
     }
 
     //Update Person
