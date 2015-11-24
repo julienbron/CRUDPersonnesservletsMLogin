@@ -58,7 +58,7 @@ public class ServletLogin extends HttpServlet {
                     int idUser = service.verifyUser(username, password);
                     if (idUser != -1) {
                         //CREATION HTTP SESSION
-                        //request.getRequestDispatcher("/index.jsp").forward(request, response);
+                        request.getRequestDispatcher("/index.jsp").forward(request, response);
                         HttpSession s = request.getSession(true);
                         //s.setAttribute("sessionDB", sessionDB);
                         s.setAttribute("username", username);
@@ -79,7 +79,7 @@ public class ServletLogin extends HttpServlet {
             } else {
                 errorlogin = true;
             }
-
+ 
             if (errorlogin) {
                 out.println("<p>Erreur d'authentification, veuillez préciser username , password");
                 out.println("<a href='login.jsp'>reessayer</a>");

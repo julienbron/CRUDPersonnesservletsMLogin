@@ -6,7 +6,6 @@
 package ch.hegarc.technoactu.crudpersonnes.business;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,7 +16,7 @@ import javax.persistence.Table;
  * @author gary.criblez
  */
 @Entity
-@Table(name = "Utilisateur")
+@Table(name = "utilisateur")
 public class User implements Serializable {
 
     @Id

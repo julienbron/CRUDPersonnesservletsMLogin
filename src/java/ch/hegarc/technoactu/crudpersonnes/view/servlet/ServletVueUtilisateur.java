@@ -41,12 +41,13 @@ public class ServletVueUtilisateur extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-             HtmlHttpUtils.doHeader("Vue Utilisateur", out);
+            HtmlHttpUtils.doHeader("Vue Utilisateur", out);
             if (HtmlHttpUtils.isAuthenticate(request)) {
 
                 //Récupère les paramètres de la requête
                 int idUser = Integer.parseInt(request.getParameter("idUser"));
-
+                out.println(idUser);
+                
                 //Récupère la session
                 HttpSession s = request.getSession();
 
@@ -57,23 +58,22 @@ public class ServletVueUtilisateur extends HttpServlet {
                 UserService service = new UserService(em);
 
                 User u = service.findUser(idUser);
-                
+
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
 
-                
                 out.println("<form method='POST' action='ServletFaireMAJUtilisateur'>");
                 out.println("<input type='hidden' name='id' value='" + u.getId() + "'><br>");
                 out.println("id: <input type='text' name='id' value='" + u.getId() + "' DISABLED><br>");
-                out.println("username: <input type='text' name='username' value='" + u.getUsername()+ "'><br>");
-                out.println("password: <input type='text' name='password' value='" + u.getPassword()+ "'><br>");
-                out.println("nom: <input type='text' name='nom' value='" + u.getLastName()+ "'><br>");
-                out.println("prenom : <input type='text' name='prenom' value='" + u.getFirstName()+ "'><br>");
+                out.println("username: <input type='text' name='username' value='" + u.getUsername() + "'><br>");
+                out.println("password: <input type='text' name='password' value='" + u.getPassword() + "'><br>");
+                out.println("nom: <input type='text' name='nom' value='" + u.getLastName() + "'><br>");
+                out.println("prenom : <input type='text' name='prenom' value='" + u.getFirstName() + "'><br>");
                 out.println(" ville :  <input type='text' name='ville' value='" + u.getCity() + "'><br>");
-                out.println(" date de naissance :  <input type='text' name='date_nais' value='" + u.getBirthday()+ "'><br>");
-                out.println(" email :  <input type='text' name='email' value='" + u.getEmail()+ "'><br>");
-                out.println(" date de recrutement :  <input type='text' name='date_recrut' value='" + u.getRecruited()+ "'><br>");
+                out.println(" date de naissance :  <input type='text' name='date_nais' value='" + u.getBirthday() + "'><br>");
+                out.println(" email :  <input type='text' name='email' value='" + u.getEmail() + "'><br>");
+                out.println(" date de recrutement :  <input type='text' name='date_recrut' value='" + u.getRecruited() + "'><br>");
                 out.println("<input type='submit' value='MAJ Utilisateur'>");
                 out.println("</form>");
 
