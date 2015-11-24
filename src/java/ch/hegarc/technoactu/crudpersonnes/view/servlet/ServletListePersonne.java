@@ -10,6 +10,7 @@ import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,22 +39,14 @@ public class ServletListePersonne extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        String nom = null, prenom = null, adresse = null, ville = null;
+        request.getRequestDispatcher("includes/header.jsp").include(request, response);
+        request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
-            HtmlHttpUtils.doHeader("liste des personnes", out);
+            out.println("<div class=\"container\">");
+            HtmlHttpUtils.doHeader("Liste des personnes", out);
 
             if (HtmlHttpUtils.isAuthenticate(request)) {
 
-                //Récupère les paramètres de la requête
-                nom = request.getParameter("nom");
-                prenom = request.getParameter("prenom");
-                adresse = request.getParameter("adresse");
-                ville = request.getParameter("ville");
-                
-                //ATTENTION EXECUTION DE CROSS SITE SCRIPTING
-                out.println("recherche de "+ nom + " "+ prenom + " "+ adresse +" " + ville+"<br>");
-               
                 //Récupère la session
                 HttpSession s = request.getSession();
                 
@@ -65,21 +58,40 @@ public class ServletListePersonne extends HttpServlet {
                 
                 //Récupère toutes les personnes et les affiches
                 List<Person> personnes = service.findAllPerson();
-                out.print(personnes.size());
-                out.println("<table>"); 
-               
-                for (int i = 0; i < personnes.size(); i++) {
-                    Person p = personnes.get(i);
-                    out.println("<tr><td>" + p.getId() + " : " + p.getNom() + " , " + p.getPrenom() + " , " + p.getAdresse() + " , " + p.getVille() + "</td><td><a href='ServletMAJPersonne?id=" + p.getId() + "'>edition</a></td><td><a href='ServletEffacerPersonne?id=" + p.getId() + "'>supprimer</a></td></tr>");
-                }
-                out.println("</table>");
+                Person p;
+                Iterator i = personnes.iterator();
                 
+                out.println("<table class=\"table table-striped\">");
+                out.println("<thead>");
+                out.println("<tr>");
+                out.println("<th>Prénom</th>");
+                out.println("<th>Nom</th>");
+                out.println("<th>Adresse</th>");
+                out.println("<th>Ville</th>");
+                out.println("<th>Action</th>");
+                out.println("</tr>");
+                out.println("</thead>");
+                out.println("<tbody>");
+                
+                while (i.hasNext()) {
+                    p = (Person) i.next();
+                    out.println("<tr>");
+                    out.println("<td>" + p.getPrenom() + "</td>");
+                    out.println("<td>" + p.getNom() + "</td>");
+                    out.println("<td>" + p.getAdresse() + "</td>");
+                    out.println("<td>" + p.getVille() + "</td>");
+                    out.println("<td><a href='ServletMAJPersonne?id=" + p.getId() + "'>Editer</a>" + " - " + "<a href='ServletEffacerPersonne?id=" + p.getId() + "'>Supprimer</a></td>");
+                    out.println("</tr>");
+                }
+                
+                out.println("</tbody>");
+                out.println("</table>");
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
-                
             }
             HtmlHttpUtils.doFooter(out);
+            out.println("</div>");
         } finally {
             out.close();
         }
