@@ -10,5 +10,5 @@ package ch.hegarc.technoactu.crudpersonnes.constant;
  * @author Romain Ducret <romain.ducret1@he-arc.ch>
  */
 public class cons {
-   public static final String PERSISTANCE_UNIT = "employesPersistenceUnit";
+   public static final String PERSISTANCE_UNIT = "persistance_techno";
 }

@@ -50,7 +50,7 @@ public class ServletLogin extends HttpServlet {
 
                     //Ouverture de la connexion
                     EntityManagerFactory emf;
-                    emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
+                    emf = Persistence.createEntityManagerFactory("persistance_techno");
                     EntityManager em = emf.createEntityManager();
                     UserService service = new UserService(em);
 

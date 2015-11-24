@@ -49,7 +49,7 @@
                     <%
 
                         EntityManagerFactory emf;
-                        emf = Persistence.createEntityManagerFactory("employesPersistenceUnit");
+                        emf = Persistence.createEntityManagerFactory("persistance_techno");
                         EntityManager em = emf.createEntityManager();
                         //   PersonService service = new PersonService(em);
                         UserService service = new UserService(em);
