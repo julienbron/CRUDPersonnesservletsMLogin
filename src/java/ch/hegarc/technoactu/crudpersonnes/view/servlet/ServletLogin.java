@@ -58,12 +58,13 @@ public class ServletLogin extends HttpServlet {
                     int idUser = service.verifyUser(username, password);
                     if (idUser != -1) {
                         //CREATION HTTP SESSION
-                        request.getRequestDispatcher("/index.jsp").forward(request, response);
+                        //request.getRequestDispatcher("/index.jsp").forward(request, response);
                         HttpSession s = request.getSession(true);
                         //s.setAttribute("sessionDB", sessionDB);
                         s.setAttribute("username", username);
                         //Attribut utiliser pour faire la MAJ Utilisateur
                         s.setAttribute("idUser", idUser);
+                        
                         
                         //Fermeture de la connexion
                         em.close();

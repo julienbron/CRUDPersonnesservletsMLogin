@@ -12,7 +12,8 @@ import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import ch.hegarc.technoactu.crudpersonnes.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
+import java.util.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
@@ -45,12 +46,14 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
             throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String id = null, username = null, password = null, nom = null, prenom = null, ville = null, date_nais = null, email = null, date_recrut = null;
+        String  id = null, username = null, password = null, nom = null, prenom = null, ville = null, date_nais = null, email = null, date_recrut = null;
         
         try {
             if (HtmlHttpUtils.isAuthenticate(request)) {
-
+                out.println("hello");
                 //Récupère les paramètres de la requête
+                
+                
                 id = request.getParameter("id");
                 username = request.getParameter("username");
                 password = request.getParameter("password");
@@ -61,18 +64,34 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 email = request.getParameter("email");
                 date_recrut = request.getParameter("date_recrut");
                 
+                Date dateN = new Date();
+                Date dateR = new Date();
+            
+                if(date_nais != null){
+                    dateN = new SimpleDateFormat("dd.MM.yyyy").parse(date_nais);
+                }
+                
+                if(date_recrut != null){
+                    dateR = new SimpleDateFormat("dd.MM.yyyy").parse(date_recrut);
+                }
+                
                 //formatage pour les champs dates        
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-                Date dateN = (Date) formatter.parse(date_nais);
-                Date dateR = (Date) formatter.parse(date_recrut);
-
-
+                
+                
+                out.println("hello");
+                out.println(id);
+                out.println(username);
+                out.println(password);
+                out.println(nom);
+                out.println(prenom);
+                out.println(dateN);
+                out.println(email);
+                out.println(new java.sql.Date(dateR.getTime()));
                 
                 //Crée l'utilisateur
-                User u = new User(Integer.parseInt(id), username, password,nom, prenom, ville, dateN, email, dateR);
-
-                //Récupère la session
-                HttpSession s = request.getSession();
+                //User u = new User(Integer.parseInt(id), username, password, nom, prenom, ville, dateN, email, dateR);
+                User u = new User("jean", "jean");
+                
 
                 //Ouverture de la connexion
                 EntityManagerFactory emf;
@@ -87,7 +106,11 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 em.close();
                 emf.close();
 
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                response.sendRedirect("ServletVueUtilisateur");
+            }else{
+                out.println("<p>Erreur d'authentification, veuillez préciser username , password");
+                out.println("<a href='login.jsp'>reessayer</a>");
+                out.println("</body></html>");
             }
         } finally {
             out.close();

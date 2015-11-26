@@ -1,0 +1,13 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.home-news-img{
+    width:100%;
+}
+
+.home-news-title a, .home-news-title a:hover{
+    color:#333;
+    text-decoration:none;
+}

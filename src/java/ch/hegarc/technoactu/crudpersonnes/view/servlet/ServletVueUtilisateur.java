@@ -40,49 +40,77 @@ public class ServletVueUtilisateur extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        request.getRequestDispatcher("includes/header.jsp").include(request, response);
+        request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
+            out.println("<div class=\"container\">");
             HtmlHttpUtils.doHeader("Vue Utilisateur", out);
-            if (HtmlHttpUtils.isAuthenticate(request)) {
-
-                //Récupère les paramètres de la requête
-                int idUser = Integer.parseInt(request.getParameter("idUser"));
-                out.println(idUser);
+            
+            if (HtmlHttpUtils.isAuthenticate(request)) {             
                 
                 //Récupère la session
-                HttpSession s = request.getSession();
+                HttpSession s = request.getSession(true);             
+                
+                //Récupère des paramètres de la session
+                Integer idUser = (Integer) s.getAttribute("idUser");
+                
 
+               
                 //Ouverture de la connexion
                 EntityManagerFactory emf;
                 emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
                 UserService service = new UserService(em);
-
+                
                 User u = service.findUser(idUser);
-
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
 
-                out.println("<form method='POST' action='ServletFaireMAJUtilisateur'>");
-                out.println("<input type='hidden' name='id' value='" + u.getId() + "'><br>");
-                out.println("id: <input type='text' name='id' value='" + u.getId() + "' DISABLED><br>");
-                out.println("username: <input type='text' name='username' value='" + u.getUsername() + "'><br>");
-                out.println("password: <input type='text' name='password' value='" + u.getPassword() + "'><br>");
-                out.println("nom: <input type='text' name='nom' value='" + u.getLastName() + "'><br>");
-                out.println("prenom : <input type='text' name='prenom' value='" + u.getFirstName() + "'><br>");
-                out.println(" ville :  <input type='text' name='ville' value='" + u.getCity() + "'><br>");
-                out.println(" date de naissance :  <input type='text' name='date_nais' value='" + u.getBirthday() + "'><br>");
-                out.println(" email :  <input type='text' name='email' value='" + u.getEmail() + "'><br>");
-                out.println(" date de recrutement :  <input type='text' name='date_recrut' value='" + u.getRecruited() + "'><br>");
-                out.println("<input type='submit' value='MAJ Utilisateur'>");
-                out.println("</form>");
-
+                out.println("<div class=\"container\">");
+                out.println("<table class=\"table table-striped\">");
+                out.println("<tr>");
+                out.println("<td style=\"width:300px;\"><b>Nom d'utilisateur</b></td>");
+                out.println("<td>"+u.getUsername()+"</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td><b>Prénom et nom</b></td>");
+                out.println("<td>"+u.getFirstName()+" "+u.getLastName()+"</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td><b>Ville</b></td>");
+                out.println("<td>"+u.getCity()+"</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td><b>Date de naissance</b></td>");
+                out.println("<td>"+u.getBirthday()+"</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td><b>Adresse Mail</b></td>");
+                out.println("<td>"+u.getEmail()+"</td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td><b>Employé depuis</b></td>");
+                out.println("<td>"+u.getRecruited()+"</td>");
+                out.println("</tr>");
+                out.println("</table>");
+            
+                out.println("<p class=\"text-right\"><a href=\"modificationUtilisateur.jsp\" class= \"btn btn-default\"span class=\"glyphicon glyphicon-pencil\"></span>Modifier les informations</a></p>");
+               
+                
+            }else{
+                out.println("<p>Erreur d'authentification, veuillez préciser username , password");
+                out.println("<a href='login.jsp'>reessayer</a>");
+                out.println("</body></html>");
             }
             HtmlHttpUtils.doFooter(out);
+            out.println("</div>");
         } finally {
             out.close();
         }
     }
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
