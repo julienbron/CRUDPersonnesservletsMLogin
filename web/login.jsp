@@ -6,16 +6,14 @@
 
 <%@include file="includes/header.jsp" %>
 
-<h1>Connection</h1>
-
 <div class="container" id="containerLogin">
-    <header id="header">
+    <header id="header" style="margin-bottom:20px;">
         <h1>CRUD Personnes</h1>
     </header>
     <div id="content">
         <div class="well">
             <header>
-                <h2><i class="fa fa-lock"></i> Connexion</h2>
+                <h2><i class="glyphicon glyphicon-log-in"></i> Connexion</h2>
             </header>
 
             <form method="POST" action="ServletLogin" id="UserLoginForm"  accept-charset="utf-8">

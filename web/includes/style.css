@@ -12,6 +12,10 @@ body{
     background-color:#fff;
 }
 
+#containerLogin{
+    margin-top:20px;
+}
+
 .nav navbar-nav navbar-right:hover{
     background-color:#2796ba;
     
