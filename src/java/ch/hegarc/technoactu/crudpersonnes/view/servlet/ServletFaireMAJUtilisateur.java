@@ -67,6 +67,7 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 Date dateN = new Date();
                 Date dateR = new Date();
             
+                 //formatage pour les champs dates  
                 if(date_nais != null){
                     dateN = new SimpleDateFormat("dd.MM.yyyy").parse(date_nais);
                 }
@@ -75,22 +76,18 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                     dateR = new SimpleDateFormat("dd.MM.yyyy").parse(date_recrut);
                 }
                 
-                //formatage pour les champs dates        
+                     
                 
+                //Récupère la session
+                HttpSession s = request.getSession(true);             
                 
-                out.println("hello");
-                out.println(id);
-                out.println(username);
-                out.println(password);
-                out.println(nom);
-                out.println(prenom);
-                out.println(dateN);
-                out.println(email);
-                out.println(new java.sql.Date(dateR.getTime()));
+                //Récupère des paramètres de la session
+                Integer idUser = (Integer) s.getAttribute("idUser");
                 
+                out.println("coucou");
                 //Crée l'utilisateur
-                //User u = new User(Integer.parseInt(id), username, password, nom, prenom, ville, dateN, email, dateR);
-                User u = new User("jean", "jean");
+                User u = new User(idUser, username, password, prenom, nom, ville, new java.sql.Date(dateN.getTime()), email, new java.sql.Date(dateR.getTime()));
+                out.println("hello");
                 
 
                 //Ouverture de la connexion
@@ -98,10 +95,10 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
                 UserService service = new UserService(em);
-
+                out.println("hello");
                 //Mise à jour
                 service.updateUser(u);
-
+                out.println("hello2");
                 //Fermeture de la connexion
                 em.close();
                 emf.close();

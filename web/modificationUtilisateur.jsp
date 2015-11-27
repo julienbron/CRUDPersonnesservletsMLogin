@@ -66,8 +66,7 @@
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label" for="password">Mot de passe</label>
                 <div class="col-md-4 col-sm-6">
-                    <input id="password" name="password" type="password"  placeholder="" class="form-control input-md">
-                    <span class="help-block">Vide = le mot de passe ne sera pas changé</span>
+                    <input id="password" name="password" type="password"  placeholder="" class="form-control input-md" required="" value="${u.getPassword()}">
                 </div>
             </div>
 
