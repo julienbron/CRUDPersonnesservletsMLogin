@@ -30,6 +30,11 @@ public class Person implements Serializable {
         this.prenom = prenom;
         this.adresse = adresse;
     }
+    
+    public Person(final String nom, final String prenom, final String adresse, final String ville){
+        this(nom, prenom, adresse);
+        this.ville = ville;
+    }
 
     public Person(final Integer id, final String nom, final String prenom, final String adresse, final String ville) {
         this(nom, prenom, adresse);
