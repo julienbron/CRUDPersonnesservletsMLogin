@@ -42,9 +42,8 @@
         //Fermeture de la connexion
         em.close();
         emf.close();
-        pageContext.setAttribute("u",u);
-        
-        
+        pageContext.setAttribute("u", u);
+
     }
 
 %>
@@ -53,9 +52,10 @@
 <link href="template/css/datepicker.css" rel="stylesheet">
 <script src="template/js/bootstrap-datepicker.js"></script>
 
-<h1 class="page-header">Information utilisateur</h1> 
-
 <div class="container">
+    
+    <h1 class="page-header"><span class='glyphicon glyphicon-pencil'></span> Modification profil</h1> 
+    
     <form class="form-horizontal"  method="POST" action="ServletFaireMAJUtilisateur">
         <input type="hidden" name="id" id="action" value="${u.getId()}" />
         <fieldset>

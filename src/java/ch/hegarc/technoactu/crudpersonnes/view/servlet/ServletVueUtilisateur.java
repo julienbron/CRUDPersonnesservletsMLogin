@@ -44,7 +44,7 @@ public class ServletVueUtilisateur extends HttpServlet {
         request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
             out.println("<div class=\"container\">");
-            HtmlHttpUtils.doHeader("Vue Utilisateur", out);
+             HtmlHttpUtils.doHeader("<span class='glyphicon glyphicon-user'></span> Profil", out);
             
             if (HtmlHttpUtils.isAuthenticate(request)) {             
                 
@@ -98,7 +98,7 @@ public class ServletVueUtilisateur extends HttpServlet {
                 out.println("</tr>");
                 out.println("</table>");
             
-                out.println("<p class=\"text-right\"><a href=\"modificationUtilisateur.jsp\" class= \"btn btn-default\"span class=\"glyphicon glyphicon-pencil\"></span>Modifier les informations</a></p>");
+                out.println("<p class='text-right'><a href='modificationUtilisateur.jsp' class='btn btn-default'><span class='glyphicon glyphicon-pencil'></span> Modifier les informations</a></p>");
                
                 
             }else{

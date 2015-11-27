@@ -19,7 +19,7 @@ public class HtmlHttpUtils {
         out.println("<title>" + titre + "</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>" + titre + "</h1><br>");
+        out.println("<h1 class='page-header'>" + titre + "</h1><br>");
 
     }
 
