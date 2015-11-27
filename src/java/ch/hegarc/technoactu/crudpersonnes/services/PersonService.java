@@ -46,7 +46,7 @@ public class PersonService {
 
     //Get Collection
     public List<Person> findAllPerson() {
-        return (List<Person>)em.createNativeQuery("SELECT * FROM personne ORDER BY numero DESC", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
+        return (List<Person>)em.createNativeQuery("SELECT * FROM PERSONNE ORDER BY NUMERO DESC", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
     }
 
     //Update Person
