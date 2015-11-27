@@ -63,13 +63,13 @@ public class ServletCreationPersonne extends HttpServlet {
                         EntityManager em = emf.createEntityManager();
                         PersonService service = new PersonService(em);
 
-                        service.createPerson(nom, adresse, adresse);
+                        service.createPerson(nom, prenom, adresse, ville);
                         
                         //Fermeture de la connexion
                         em.close();
                         emf.close();
 
-                        out.println("<p>" + nom + "/" + prenom + "/" + adresse + "/" + ville + "</p>");
+                        response.sendRedirect("ServletListePersonne");
                     } else {
                         out.println("<p>nom et prenom ne doivent pas etre null !!</p>");
                     }
