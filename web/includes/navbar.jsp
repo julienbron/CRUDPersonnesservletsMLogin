@@ -22,7 +22,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!--<li class="active"><a href="index.jps">Index<span class="sr-only">(current)</span></a></li>-->
                 <li><a href="ServletListePersonne"><span class='glyphicon glyphicon-th-list'></span> Liste Personne</a></li>
-                <li><a href="ServletCreationPersonne"><span class='glyphicon glyphicon-plus'></span> Creation Personne</a></li>
+                <li><a href="creationPersonne.jsp"><span class='glyphicon glyphicon-plus'></span> Creation Personne</a></li>
                 <li><a href="ServletVueUtilisateur"><span class='glyphicon glyphicon-user'></span> Profil</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
