@@ -74,24 +74,27 @@ public class ServletVueUtilisateur extends HttpServlet {
                 out.println("<td>"+u.getUsername()+"</td>");
                 out.println("</tr>");
                 out.println("<tr>");
-                out.println("<td><b>Prénom et nom</b></td>");
-                out.println("<td>"+u.getFirstName()+" "+u.getLastName()+"</td>");
+                out.println("<td><b>Nom</b></td>");
+                out.println("<td>"+viewValue(u.getLastName())+"</td>");
+                out.println("</tr>");
+                out.println("<td><b>Prénom</b></td>");
+                out.println("<td>"+viewValue(u.getFirstName())+"</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Ville</b></td>");
-                out.println("<td>"+u.getCity()+"</td>");
+                out.println("<td>"+viewValue(u.getCity())+"</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Date de naissance</b></td>");
-                out.println("<td>"+u.getBirthday()+"</td>");
+                out.println("<td>"+viewValue(u.getBirthday())+"</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Adresse Mail</b></td>");
-                out.println("<td>"+u.getEmail()+"</td>");
+                out.println("<td>"+viewValue(u.getEmail())+"</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Employé depuis</b></td>");
-                out.println("<td>"+u.getRecruited()+"</td>");
+                out.println("<td>"+viewValue(u.getRecruited())+"</td>");
                 out.println("</tr>");
                 out.println("</table>");
             
@@ -109,6 +112,16 @@ public class ServletVueUtilisateur extends HttpServlet {
             out.close();
         }
     }
+    
+    //méthode pour éviter que null s'affiche si le champ est vide
+    private String viewValue (Object value){
+        if (value == null){
+            return "";
+        }else{
+            return value.toString();
+        }
+        
+    } 
     
     
 

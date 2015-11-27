@@ -44,6 +44,7 @@
         emf.close();
         pageContext.setAttribute("u",u);
         
+        
     }
 
 %>
@@ -51,6 +52,8 @@
 
 <link href="template/css/datepicker.css" rel="stylesheet">
 <script src="template/js/bootstrap-datepicker.js"></script>
+
+<h1 class="page-header">Information utilisateur</h1> 
 
 <div class="container">
     <form class="form-horizontal"  method="POST" action="ServletFaireMAJUtilisateur">

@@ -50,7 +50,7 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
         
         try {
             if (HtmlHttpUtils.isAuthenticate(request)) {
-                out.println("hello");
+                
                 //Récupère les paramètres de la requête
                 
                 
@@ -84,10 +84,10 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 //Récupère des paramètres de la session
                 Integer idUser = (Integer) s.getAttribute("idUser");
                 
-                out.println("coucou");
+               
                 //Crée l'utilisateur
                 User u = new User(idUser, username, password, prenom, nom, ville, new java.sql.Date(dateN.getTime()), email, new java.sql.Date(dateR.getTime()));
-                out.println("hello");
+                
                 
 
                 //Ouverture de la connexion
@@ -95,10 +95,10 @@ public class ServletFaireMAJUtilisateur extends HttpServlet {
                 emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
                 UserService service = new UserService(em);
-                out.println("hello");
+                
                 //Mise à jour
                 service.updateUser(u);
-                out.println("hello2");
+                
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
