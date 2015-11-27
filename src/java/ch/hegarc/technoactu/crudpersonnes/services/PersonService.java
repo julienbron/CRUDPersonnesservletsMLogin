@@ -25,8 +25,8 @@ public class PersonService {
     }
 
     //Create person
-    public Person createPerson(final String name, final String lastname, final String adress) {
-        Person pers = new Person(name, lastname, adress);
+    public Person createPerson(final String name, final String lastname, final String adress, final String city) {
+        Person pers = new Person(name, lastname, adress, city);
         em.getTransaction().begin();
         em.persist(pers);
         em.getTransaction().commit();
@@ -46,7 +46,7 @@ public class PersonService {
 
     //Get Collection
     public List<Person> findAllPerson() {
-        return (List<Person>)em.createNativeQuery("SELECT * FROM personne", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
+        return (List<Person>)em.createNativeQuery("SELECT * FROM personne ORDER BY numero DESC", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
     }
 
     //Update Person
