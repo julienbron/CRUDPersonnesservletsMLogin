@@ -88,7 +88,7 @@ public class ServletListePersonne extends HttpServlet {
                 out.println("</tbody>");
                 out.println("</table>");
 
-                out.println("<p class='text-right'><a href='ServletCreationPersonne' class='btn btn-success'><span class='glyphicon glyphicon-plus'></span> Ajouter</a></p>");
+                out.println("<p class='text-right'><a href='creationPersonne.jsp' class='btn btn-success'><span class='glyphicon glyphicon-plus'></span> Ajouter</a></p>");
 
                 //Fermeture de la connexion
                 em.close();
