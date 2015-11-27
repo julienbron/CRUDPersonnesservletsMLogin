@@ -136,7 +136,3 @@
             </div>
         </fieldset>
     </form>
-
-
-
-    <%@include file="includes/footer.jsp" %>

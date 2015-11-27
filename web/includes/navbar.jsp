@@ -14,16 +14,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp">Gestion du personnel</a>
+            <a class="navbar-brand" href="ServletListePersonne">Gestion du personnel</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li class="active"><a href="index.jps">Index<span class="sr-only">(current)</span></a></li>-->
-                <li><a href="ServletListePersonne">Liste Personne</a></li>
-                <li><a href="ServletCreationPersonne">Creation Personne</a></li>
-                <li><a href="ServletVueUtilisateur">Profil</a></li>
+                <li><a href="ServletListePersonne"><span class='glyphicon glyphicon-th-list'></span> Liste Personne</a></li>
+                <li><a href="ServletCreationPersonne"><span class='glyphicon glyphicon-plus'></span> Creation Personne</a></li>
+                <li><a href="ServletVueUtilisateur"><span class='glyphicon glyphicon-user'></span> Profil</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

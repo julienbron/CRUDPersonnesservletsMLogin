@@ -76,5 +76,3 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
-
-<%@include file="includes/footer.jsp" %>
