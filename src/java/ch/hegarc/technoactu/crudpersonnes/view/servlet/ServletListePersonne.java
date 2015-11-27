@@ -43,7 +43,7 @@ public class ServletListePersonne extends HttpServlet {
         request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
             out.println("<div class=\"container\">");
-            HtmlHttpUtils.doHeader("Liste des personnes", out);
+            HtmlHttpUtils.doHeader("<span class='glyphicon glyphicon-th-list'></span> Liste des personnes", out);
 
             if (HtmlHttpUtils.isAuthenticate(request)) {
 
@@ -80,7 +80,7 @@ public class ServletListePersonne extends HttpServlet {
                     out.println("<td>" + p.getNom() + "</td>");
                     out.println("<td>" + p.getAdresse() + "</td>");
                     out.println("<td>" + p.getVille() + "</td>");
-                    out.println("<td><a href='ServletMAJPersonne?id=" + p.getId() + "'>Editer</a>" + " - " + "<a href='ServletEffacerPersonne?id=" + p.getId() + "'>Supprimer</a></td>");
+                    out.println("<td><a class='btn btn-xs btn-warning' href='ServletMAJPersonne?id=" + p.getId() + "'><span class='glyphicon glyphicon-pencil'></span> Editer</a>" + " " + "<a class='btn btn-xs btn-danger' href='ServletEffacerPersonne?id=" + p.getId() + "'><span class='glyphicon glyphicon-trash'></span> Supprimer</a></td>");
                     out.println("</tr>");
                 }
                 
