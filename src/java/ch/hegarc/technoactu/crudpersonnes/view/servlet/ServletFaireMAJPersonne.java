@@ -70,7 +70,7 @@ public class ServletFaireMAJPersonne extends HttpServlet {
                 em.close();
                 emf.close();
 
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("ServletListePersonne").forward(request, response);
             }
         } finally {
             out.close();

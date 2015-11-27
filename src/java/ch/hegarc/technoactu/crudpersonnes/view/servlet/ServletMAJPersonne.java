@@ -40,6 +40,8 @@ public class ServletMAJPersonne extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        request.getRequestDispatcher("includes/header.jsp").include(request, response);
+        request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
             HtmlHttpUtils.doHeader("MAJ personne", out);
             if (HtmlHttpUtils.isAuthenticate(request)) {
@@ -57,21 +59,22 @@ public class ServletMAJPersonne extends HttpServlet {
                 PersonService service = new PersonService(em);
 
                 Person p = service.findPerson(id);
-                
+
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
 
                 //PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
                 //Person p = pdao.researchPersonByID(id);
-                out.println("<form method='GET' action='ServletFaireMAJPersonne'>");
+                out.println("<form  class=\"form-horizontal\" method='GET' action='ServletFaireMAJPersonne'>");
                 out.println("<input type='hidden' name='id' value='" + p.getId() + "'><br>");
-                out.println("id: <input type='text' name='id' value='" + p.getId() + "' DISABLED><br>");
-                out.println("nom: <input type='text' name='nom' value='" + p.getNom() + "'><br>");
-                out.println("prenom : <input type='text' name='prenom' value='" + p.getPrenom() + "'><br>");
-                out.println(" adresse: <input type='text' name='adresse' value='" + p.getAdresse() + "'><br>");
-                out.println(" ville :  <input type='text' name='ville' value='" + p.getVille() + "'><br>");
-                out.println("<input type='submit' value='MAJ personne'>");
+                out.println("id: <input class=\"form-control input-md\"  type='text' name='id' value='" + p.getId() + "' DISABLED><br>");
+                out.println("nom: <input class=\"form-control input-md\"  type='text' name='nom' value='" + p.getNom() + "'><br>");
+                out.println("prenom : <input class=\"form-control input-md\"  type='text' name='prenom' value='" + p.getPrenom() + "'><br>");
+                out.println(" adresse: <input class=\"form-control input-md\"  type='text' name='adresse' value='" + p.getAdresse() + "'><br>");
+                out.println(" ville :  <input class=\"form-control input-md\"  type='text' name='ville' value='" + p.getVille() + "'><br>");
+                //out.println("<input type='submit' value='MAJ personne'>");
+                out.println("<button id=\"submit\" name=\"submit\" class=\"btn btn-success\">Appliquer</button>");
                 out.println("</form>");
 
             }

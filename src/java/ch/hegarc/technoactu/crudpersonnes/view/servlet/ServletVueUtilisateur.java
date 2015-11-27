@@ -43,25 +43,22 @@ public class ServletVueUtilisateur extends HttpServlet {
         request.getRequestDispatcher("includes/header.jsp").include(request, response);
         request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
-            out.println("<div class=\"container\">");
-             HtmlHttpUtils.doHeader("<span class='glyphicon glyphicon-user'></span> Profil", out);
-            
-            if (HtmlHttpUtils.isAuthenticate(request)) {             
-                
+            HtmlHttpUtils.doHeader("<span class='glyphicon glyphicon-user'></span> Profil", out);
+
+            if (HtmlHttpUtils.isAuthenticate(request)) {
+
                 //Récupère la session
-                HttpSession s = request.getSession(true);             
-                
+                HttpSession s = request.getSession(true);
+
                 //Récupère des paramètres de la session
                 Integer idUser = (Integer) s.getAttribute("idUser");
-                
 
-               
                 //Ouverture de la connexion
                 EntityManagerFactory emf;
                 emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
                 UserService service = new UserService(em);
-                
+
                 User u = service.findUser(idUser);
                 //Fermeture de la connexion
                 em.close();
@@ -71,59 +68,55 @@ public class ServletVueUtilisateur extends HttpServlet {
                 out.println("<table class=\"table table-striped\">");
                 out.println("<tr>");
                 out.println("<td style=\"width:300px;\"><b>Nom d'utilisateur</b></td>");
-                out.println("<td>"+u.getUsername()+"</td>");
+                out.println("<td>" + u.getUsername() + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Nom</b></td>");
-                out.println("<td>"+viewValue(u.getLastName())+"</td>");
+                out.println("<td>" + viewValue(u.getLastName()) + "</td>");
                 out.println("</tr>");
                 out.println("<td><b>Prénom</b></td>");
-                out.println("<td>"+viewValue(u.getFirstName())+"</td>");
+                out.println("<td>" + viewValue(u.getFirstName()) + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Ville</b></td>");
-                out.println("<td>"+viewValue(u.getCity())+"</td>");
+                out.println("<td>" + viewValue(u.getCity()) + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Date de naissance</b></td>");
-                out.println("<td>"+viewValue(u.getBirthday())+"</td>");
+                out.println("<td>" + viewValue(u.getBirthday()) + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Adresse Mail</b></td>");
-                out.println("<td>"+viewValue(u.getEmail())+"</td>");
+                out.println("<td>" + viewValue(u.getEmail()) + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
                 out.println("<td><b>Employé depuis</b></td>");
-                out.println("<td>"+viewValue(u.getRecruited())+"</td>");
+                out.println("<td>" + viewValue(u.getRecruited()) + "</td>");
                 out.println("</tr>");
                 out.println("</table>");
-            
+
                 out.println("<p class='text-right'><a href='modificationUtilisateur.jsp' class='btn btn-default'><span class='glyphicon glyphicon-pencil'></span> Modifier les informations</a></p>");
-               
-                
-            }else{
+
+            } else {
                 out.println("<p>Erreur d'authentification, veuillez préciser username , password");
                 out.println("<a href='login.jsp'>reessayer</a>");
                 out.println("</body></html>");
             }
             HtmlHttpUtils.doFooter(out);
-            out.println("</div>");
         } finally {
             out.close();
         }
     }
-    
+
     //méthode pour éviter que null s'affiche si le champ est vide
-    private String viewValue (Object value){
-        if (value == null){
+    private String viewValue(Object value) {
+        if (value == null) {
             return "";
-        }else{
+        } else {
             return value.toString();
         }
-        
-    } 
-    
-    
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -44,7 +44,6 @@ public class ServletListePersonne extends HttpServlet {
         request.getRequestDispatcher("includes/header.jsp").include(request, response);
         request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
-            out.println("<div class=\"container\">");
             HtmlHttpUtils.doHeader("<span class='glyphicon glyphicon-th-list'></span> Liste des personnes", out);
 
             if (HtmlHttpUtils.isAuthenticate(request)) {
@@ -96,7 +95,6 @@ public class ServletListePersonne extends HttpServlet {
                 emf.close();
             }
             HtmlHttpUtils.doFooter(out);
-            out.println("</div>");
         } finally {
             out.close();
         }

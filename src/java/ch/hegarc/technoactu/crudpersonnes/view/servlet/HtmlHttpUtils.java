@@ -19,12 +19,14 @@ public class HtmlHttpUtils {
         out.println("<title>" + titre + "</title>");
         out.println("</head>");
         out.println("<body>");
+        out.println("<div class='container'>");
         out.println("<h1 class='page-header'>" + titre + "</h1><br>");
 
     }
 
     public static void doFooter(PrintWriter out) {
         out.println("<div><a class='btn btn-info' href='ServletListePersonne'><span class='glyphicon glyphicon-th-list'></span> Accueil</a> &nbsp;<a class='btn btn-warning' href='ServletLogout'><span class='glyphicon glyphicon-log-out'></span> Déconnexion</a></div>");
+        out.println("</div>");
         out.println("</body>");
         out.println("</html>");
     }
