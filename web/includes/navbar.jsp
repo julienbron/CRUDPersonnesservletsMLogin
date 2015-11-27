@@ -21,8 +21,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <!--<li class="active"><a href="index.jps">Index<span class="sr-only">(current)</span></a></li>-->
-                <li><a href="recherchePersonne.html">Recherche Personne</a></li>
-                <li><a href="creationPersonne.html">Creation Personne</a></li>
+                <li><a href="ServletListePersonne">Liste Personne</a></li>
+                <li><a href="ServletCreationPersonne">Creation Personne</a></li>
                 <li><a href="ServletVueUtilisateur">Profil</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->

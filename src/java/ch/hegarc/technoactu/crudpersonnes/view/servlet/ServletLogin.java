@@ -70,7 +70,7 @@ public class ServletLogin extends HttpServlet {
                         em.close();
                         emf.close();
                         
-                        response.sendRedirect("index.jsp");
+                        response.sendRedirect("ServletListePersonne");
                     } else {
                         errorlogin = true;
                     }
