@@ -24,6 +24,7 @@
                 <li><a href="ServletListePersonne"><span class='glyphicon glyphicon-th-list'></span> Liste Personne</a></li>
                 <li><a href="creationPersonne.jsp"><span class='glyphicon glyphicon-plus'></span> Creation Personne</a></li>
                 <li><a href="ServletVueUtilisateur"><span class='glyphicon glyphicon-user'></span> Profil</a></li>
+                <li><a href="ServletLogout"><span class='glyphicon glyphicon-log-out'></span> Déconnexion (<% out.print(request.getSession().getAttribute("username").toString()); %>)</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
