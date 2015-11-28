@@ -51,11 +51,11 @@ public class ServletFaireMAJPersonne extends HttpServlet {
                 adresse = request.getParameter("adresse");
                 ville = request.getParameter("ville");
 
-                //Crée la personne
-                Person p = new Person(Integer.parseInt(id), nom, prenom, adresse, ville);
-
                 //Récupère la session
                 HttpSession s = request.getSession();
+
+                //Crée la personne
+                Person p = new Person(Integer.parseInt(id), nom, prenom, adresse, ville,s.getAttribute("username").toString());
 
                 //Ouverture de la connexion
                 EntityManagerFactory emf;

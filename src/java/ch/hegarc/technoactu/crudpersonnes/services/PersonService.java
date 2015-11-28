@@ -8,8 +8,6 @@ package ch.hegarc.technoactu.crudpersonnes.services;
 import ch.hegarc.technoactu.crudpersonnes.business.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -25,8 +23,8 @@ public class PersonService {
     }
 
     //Create person
-    public Person createPerson(final String name, final String lastname, final String adress, final String city) {
-        Person pers = new Person(name, lastname, adress, city);
+    public Person createPerson(final String name, final String lastname, final String adress, final String city,final String userlive) {
+        Person pers = new Person(name, lastname, adress, city,userlive);
         em.getTransaction().begin();
         em.persist(pers);
         em.getTransaction().commit();

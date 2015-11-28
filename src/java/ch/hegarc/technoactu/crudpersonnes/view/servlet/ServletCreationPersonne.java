@@ -63,7 +63,7 @@ public class ServletCreationPersonne extends HttpServlet {
                         EntityManager em = emf.createEntityManager();
                         PersonService service = new PersonService(em);
 
-                        service.createPerson(nom, prenom, adresse, ville);
+                        service.createPerson(nom, prenom, adresse, ville,s.getAttribute("username").toString());
                         
                         //Fermeture de la connexion
                         em.close();

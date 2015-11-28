@@ -64,7 +64,7 @@ public class ServletLogin extends HttpServlet {
                         s.setAttribute("username", username);
                         //Attribut utiliser pour faire la MAJ Utilisateur
                         s.setAttribute("idUser", idUser);
-                        
+                      
                         
                         //Fermeture de la connexion
                         em.close();

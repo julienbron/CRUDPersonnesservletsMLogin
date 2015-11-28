@@ -21,23 +21,26 @@ public class Person implements Serializable {
     private String adresse = null;
     @Column(name = "VILLE", nullable = true, length = 4000)
     private String ville = null;
+    @Column(name = "USER_LIVE", nullable = true, length = 4000)
+    private String user_live = null;
 
     public Person() {
     }
 
-    public Person(final String nom, final String prenom, final String adresse) {
+    public Person(final String nom, final String prenom, final String adresse,final String user_live) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
+        this.user_live=user_live;
     }
-    
-    public Person(final String nom, final String prenom, final String adresse, final String ville){
-        this(nom, prenom, adresse);
+
+    public Person(final String nom, final String prenom, final String adresse, final String ville, final String user_live) {
+        this(nom, prenom, adresse,user_live);
         this.ville = ville;
     }
 
-    public Person(final Integer id, final String nom, final String prenom, final String adresse, final String ville) {
-        this(nom, prenom, adresse);
+    public Person(final Integer id, final String nom, final String prenom, final String adresse, final String ville,final String user_live) {
+        this(nom, prenom, adresse,user_live);
         this.id = id;
         this.ville = ville;
 
@@ -81,6 +84,14 @@ public class Person implements Serializable {
 
     public void setVille(final String ville) {
         this.ville = ville;
+    }
+
+    public String getUser_live() {
+        return user_live;
+    }
+
+    public void setUser_live(String user_live) {
+        this.user_live = user_live;
     }
 
     public void print() {
