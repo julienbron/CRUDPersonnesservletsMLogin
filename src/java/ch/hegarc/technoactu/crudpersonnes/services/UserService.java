@@ -40,22 +40,30 @@ public class UserService {
 
     //Verify User
     public int verifyUser(final String username, final String password) {
-        
+
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT u FROM User u WHERE u.username =?1 and u.password =?2");
         TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
         query.setParameter(1, username);
         query.setParameter(2, password);
-        
-        if (query.getResultList().size() == 1){
+
+        if (query.getResultList().size() == 1) {
             return query.getSingleResult().getId();
-        }else{
+        } else {
             return -1;
         }
-        
-        
     }
-    
+
+    //Récupère le nombre de points de l'utilisateur
+    public int getPoint(final String username) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT jn FROM Person_JN jn WHERE jn.user_live =?1");
+        TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
+        query.setParameter(1, username);
+        
+        return query.getResultList().size();
+    }
+
     //Update Person
     public void updateUser(final User user) {
         User UserToUpdate = findUser(user.getId());
@@ -68,7 +76,7 @@ public class UserService {
         UserToUpdate.setBirthday(user.getBirthday());
         UserToUpdate.setEmail(user.getEmail());
         UserToUpdate.setRecruited(user.getRecruited());
-       
+
         em.getTransaction().commit();
     }
 

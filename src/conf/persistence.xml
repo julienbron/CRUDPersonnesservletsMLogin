@@ -4,6 +4,7 @@
     <jta-data-source>DataSourceAlex</jta-data-source>
     <class>ch.hegarc.technoactu.crudpersonnes.business.Person</class>
     <class>ch.hegarc.technoactu.crudpersonnes.business.User</class>
+    <class>ch.hegarc.technoactu.crudpersonnes.business.Person_JN</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

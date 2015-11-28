@@ -60,14 +60,18 @@ public class ServletVueUtilisateur extends HttpServlet {
                 UserService service = new UserService(em);
 
                 User u = service.findUser(idUser);
+                int point = service.getPoint(s.getAttribute("username").toString());
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
 
                 out.println("<div class=\"container\">");
+                out.println("points:");
+                out.println(point);
                 out.println("<table class=\"table table-striped\">");
                 out.println("<tr>");
                 out.println("<td style=\"width:300px;\"><b>Nom d'utilisateur</b></td>");
+
                 out.println("<td>" + u.getUsername() + "</td>");
                 out.println("</tr>");
                 out.println("<tr>");
