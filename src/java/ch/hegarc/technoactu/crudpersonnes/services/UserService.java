@@ -55,13 +55,21 @@ public class UserService {
     }
 
     //Récupère le nombre de points de l'utilisateur
-    public int getPoint(final String username) {
+    public int getSkillPoint(final String username) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT jn FROM Person_JN jn WHERE jn.user_live =?1");
         TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
         query.setParameter(1, username);
         
         return query.getResultList().size();
+    }
+    
+    public int getSkillLevel(final int SkillPoint){
+       return SkillPoint / 10;
+    }
+    
+    public int getSkillPercentage(final int SkillPoint){
+         return (SkillPoint % 10) * 10;
     }
 
     //Update Person
