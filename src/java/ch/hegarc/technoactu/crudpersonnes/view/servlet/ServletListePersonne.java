@@ -48,6 +48,9 @@ public class ServletListePersonne extends HttpServlet {
 
             if (HtmlHttpUtils.isAuthenticate(request)) {
 
+                //Paramètre de la recherche
+                String recherche = request.getParameter("recherche");
+
                 //Récupère la session
                 HttpSession s = request.getSession();
 
@@ -57,10 +60,29 @@ public class ServletListePersonne extends HttpServlet {
                 EntityManager em = emf.createEntityManager();
                 PersonService service = new PersonService(em);
 
-                //Récupère toutes les personnes et les affiches
-                List<Person> personnes = service.findAllPerson();
+                List<Person> personnes;
                 Person p;
+                
+                if (recherche == null) {
+                    //Récupère toutes les personnes et les affiches
+                    personnes = service.findAllPerson();
+                } else {
+                    //Récupère toutes les personnes avec le paramètre de recherche et les affiche
+                    personnes = service.findAllPersonWhere(recherche);
+                }
                 Iterator i = personnes.iterator();
+
+                out.println("<form method='GET' action='ServletListePersonne'>");
+                out.println("<div class=\"form-group\">");
+                out.println("<div class=\"input-group input-group-sm icon-addon addon-sm\">");
+                out.println("<input type=\"text\" placeholder=\"Texte\" name=\"recherche\" id=\"schbox\" class=\"form-control input-sm\">");
+                out.println("<i class=\"icon icon-search\"></i>");
+                out.println("<span class=\"input-group-btn\">");
+                out.println("<button type=\"submit\" class=\"btn btn-inverse\">Rechercher</button>");
+                out.println("</span>");
+                out.println("</div>");
+                out.println("</div>");
+                out.println("</form>");
 
                 out.println("<table class=\"table table-striped\">");
                 out.println("<thead>");
