@@ -91,7 +91,7 @@ public class ServletListePersonne extends HttpServlet {
                 out.println("<th>Nom</th>");
                 out.println("<th>Adresse</th>");
                 out.println("<th>Ville</th>");
-                out.println("<th>Action</th>");
+                out.println("<th class='text-center'>Action</th>");
                 out.println("</tr>");
                 out.println("</thead>");
                 out.println("<tbody>");
