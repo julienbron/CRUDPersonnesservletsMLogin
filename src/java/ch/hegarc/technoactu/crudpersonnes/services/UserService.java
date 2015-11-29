@@ -55,21 +55,52 @@ public class UserService {
     }
 
     //Récupère le nombre de points de l'utilisateur
+    public boolean badgeProfilFull(final String username) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT u FROM User u WHERE u.username =?1 and u.email is not null and u.city is not null and u.firstName is not null and u.LastName is not null");
+        TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
+        query.setParameter(1, username);
+
+        if (query.getResultList().size() >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean badge5Insert(final String username, final int limit, final String operation) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT jn FROM Person_JN jn WHERE jn.user_live =?1 and jn.jn_operation =?2 ");
+        TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
+        query.setParameter(1, username);
+        query.setParameter(2, operation);
+
+        if (query.getResultList().size() >= limit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //Récupère le nombre de points de l'utilisateur
     public int getSkillPoint(final String username) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("SELECT jn FROM Person_JN jn WHERE jn.user_live =?1");
         TypedQuery<User> query = em.createQuery(stringBuilder.toString(), User.class);
         query.setParameter(1, username);
-        
+
         return query.getResultList().size();
     }
-    
-    public int getSkillLevel(final int SkillPoint){
-       return SkillPoint / 10;
+
+    //Retourne le niveau d'un utilisateur
+    public int getSkillLevel(final int SkillPoint) {
+        return SkillPoint / 10;
     }
-    
-    public int getSkillPercentage(final int SkillPoint){
-         return (SkillPoint % 10) * 10;
+
+    //Retourne le pourcentage de progression d'un utilisateur pour atteindre le prochain niveau
+    public int getSkillPercentage(final int SkillPoint) {
+        return (SkillPoint % 10) * 10;
     }
 
     //Update Person

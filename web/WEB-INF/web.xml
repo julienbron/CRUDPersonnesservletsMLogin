@@ -9,6 +9,10 @@
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletListePersonne</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ServletBadge</servlet-name>
+        <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletBadge</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ServletEffacerPersonne</servlet-name>
         <servlet-class>ch.hegarc.technoactu.crudpersonnes.view.servlet.ServletEffacerPersonne</servlet-class>
     </servlet>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletBadge</servlet-name>
+        <url-pattern>/ServletBadge</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletVueUtilisateur</servlet-name>
