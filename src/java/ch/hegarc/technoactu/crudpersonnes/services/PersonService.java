@@ -46,6 +46,12 @@ public class PersonService {
     public List<Person> findAllPerson() {
         return (List<Person>)em.createNativeQuery("SELECT * FROM PERSONNE ORDER BY NUMERO DESC", ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
     }
+    
+    //Get Collection Where
+    public List<Person> findAllPersonWhere(String param) {
+        String query = "SELECT * FROM PERSONNE WHERE NOM LIKE '%" + param + "%' OR PRENOM LIKE '%" + param +"%' OR ADRESSE LIKE '%"+ param +"%' OR VILLE LIKE '%" + param + "%'  ORDER BY NUMERO DESC";
+        return (List<Person>)em.createNativeQuery(query, ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
+    }
 
     //Update Person
     public void updatePerson(final Person pers) {

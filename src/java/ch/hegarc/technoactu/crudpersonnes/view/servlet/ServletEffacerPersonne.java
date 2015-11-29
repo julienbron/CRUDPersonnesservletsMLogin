@@ -40,13 +40,13 @@ public class ServletEffacerPersonne extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-
+        request.getRequestDispatcher("includes/header.jsp").include(request, response);
+        request.getRequestDispatcher("includes/navbar.jsp").include(request, response);
         try {
             HtmlHttpUtils.doHeader("Etes-vous sur de vouloir effacer la personne ? ", out);
             if (HtmlHttpUtils.isAuthenticate(request)) {
-
                 //Récupère les paramètres de la requête
-                int id = Integer.getInteger(request.getParameter("id"));
+                int id = Integer.parseInt(request.getParameter("id"));
 
                 //Récupère la session
                 HttpSession s = request.getSession();
@@ -59,13 +59,27 @@ public class ServletEffacerPersonne extends HttpServlet {
 
                 //Person p = pdao.researchPersonByID(id);
                 Person p = service.findPerson(id);
-                
-                out.println("<table>");
 
-                out.println("<tr><td>" + p.getId() + " : " + p.getNom() + " , " + p.getPrenom() + " , " + p.getAdresse() + " , " + p.getVille() + "</td><td><a href='ServletFaireEffacementPersonne?id=" + p.getId() + "'>oui supprimer</a></td></tr>");
-
+                out.println("<table class=\"table table-striped\">");
+                out.println("<thead>");
+                out.println("<tr>");
+                out.println("<th>Prénom</th>");
+                out.println("<th>Nom</th>");
+                out.println("<th>Adresse</th>");
+                out.println("<th>Ville</th>");
+                out.println("<th>Action</th>");
+                out.println("</tr>");
+                out.println("</thead>");
+                out.println("<tbody>");
+                out.println("<tr>");
+                out.println("<td>" + p.getPrenom() + "</td>");
+                out.println("<td>" + p.getNom() + "</td>");
+                out.println("<td class='hidden-xs'>" + p.getAdresse() + "</td>");
+                out.println("<td class='hidden-xs'>" + p.getVille() + "</td>");
+                out.println("<td><a class='btn btn-xs btn-warning' href='ServletFaireEffacementPersonne?id=" + p.getId() + "'><span class='glyphicon glyphicon-trash'></span> Supprimer</a></td>");
+                out.println("</tr>");
+                out.println("</tbody>");
                 out.println("</table>");
-
                 //Fermeture de la connexion
                 em.close();
                 emf.close();
