@@ -107,6 +107,15 @@ public class ServletVueUtilisateur extends HttpServlet {
                 out.println("<td>" + viewValue(u.getRecruited()) + "</td>");
                 out.println("</tr>");
                 out.println("</table>");
+                
+                 //affiche une image et un texte si l'utilisateur a completer ces informations
+                if(checkFullInfo(u)){
+                     out.println("<img src = \"images/goodguy.png\" class = \"img-thumbnail center-block\">");
+                     out.println("<div align=\"center\">");
+                     out.println("<h3>Infos complétées</h3>");
+                     out.println("</div>");
+                }
+
 
                 out.println("<p class='text-right'><a href='modificationUtilisateur.jsp' class='btn btn-default'><span class='glyphicon glyphicon-pencil'></span> Modifier les informations</a></p>");
 
@@ -129,6 +138,14 @@ public class ServletVueUtilisateur extends HttpServlet {
             return value.toString();
         }
 
+    }
+    //méthode pour voir si l'utilisateur a remplit toutes ces infos complémentaires
+    private Boolean checkFullInfo(User u){
+        if (u.getFirstName() !=null & u.getLastName()!=null & u.getCity()!=null & u.getBirthday()!=null & u.getEmail()!=null & u.getRecruited()!=null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
