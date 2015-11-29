@@ -76,7 +76,7 @@ public class ServletEffacerPersonne extends HttpServlet {
                 out.println("<td>" + p.getNom() + "</td>");
                 out.println("<td class='hidden-xs'>" + p.getAdresse() + "</td>");
                 out.println("<td class='hidden-xs'>" + p.getVille() + "</td>");
-                out.println("<td><a class='btn btn-xs btn-warning' href='ServletFaireEffacementPersonne?id=" + p.getId() + "'><span class='glyphicon glyphicon-trash'></span> Supprimer</a></td>");
+                out.println("<td><a class='btn btn-xs btn-danger' href='ServletFaireEffacementPersonne?id=" + p.getId() + "'><span class='glyphicon glyphicon-trash'></span> Supprimer</a></td>");
                 out.println("</tr>");
                 out.println("</tbody>");
                 out.println("</table>");

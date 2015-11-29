@@ -66,8 +66,9 @@ public class PersonService {
     }
 
     //Remove person
-    public void removePersonne(int id) {
+    public void removePersonne(int id,final String userLive) {
         Person emp = findPerson(id);
+        emp.setUser_live(userLive);
         if (emp != null) {
             em.getTransaction().begin();
             em.remove(emp);

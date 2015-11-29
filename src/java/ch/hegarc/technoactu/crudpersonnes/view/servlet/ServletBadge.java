@@ -1,18 +1,10 @@
 package ch.hegarc.technoactu.crudpersonnes.view.servlet;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-import ch.hegarc.technoactu.crudpersonnes.business.Person;
 import ch.hegarc.technoactu.crudpersonnes.constant.cons;
-import ch.hegarc.technoactu.crudpersonnes.services.PersonService;
 import ch.hegarc.technoactu.crudpersonnes.services.UserService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -26,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author termine
+ * @author Romain Ducret <romain.ducret1@he-arc.ch>
  */
 public class ServletBadge extends HttpServlet {
 
@@ -56,61 +48,60 @@ public class ServletBadge extends HttpServlet {
                 EntityManagerFactory emf;
                 emf = Persistence.createEntityManagerFactory(cons.PERSISTANCE_UNIT);
                 EntityManager em = emf.createEntityManager();
-                //PersonService service = new PersonService(em);
                 UserService service = new UserService(em);
 
                 //Badges Profil
                 out.println("<div class='row'>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "1 Profil completé", service.badgeProfilFull(s.getAttribute("username").toString()), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "Profil completé", service.badgeProfilFull(s.getAttribute("username").toString()), "template/eye_blue.png");
                 out.println("</div>");
                 out.println("</div>");
 
                 //Badges d'ajout
                 out.println("<div class='row'>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "1 Personne ajoutée", service.badge5Insert(s.getAttribute("username").toString(), 1, "INS"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "1 Personne ajoutée", service.badge5Insert(s.getAttribute("username").toString(), 1, "INS"), "template/eye_green.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "5 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 5, "INS"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "5 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 5, "INS"), "template/eye_green.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "10 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 10, "INS"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "10 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 10, "INS"), "template/eye_green.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "15 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 15, "INS"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "15 Personnes ajoutées", service.badge5Insert(s.getAttribute("username").toString(), 15, "INS"), "template/eye_green.png");
                 out.println("</div>");
                 out.println("</div>");
 
                 //Badges de modification
                 out.println("<div class='row'>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "1 Personne modifiée", service.badge5Insert(s.getAttribute("username").toString(), 1, "UPD"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "1 Personne modifiée", service.badge5Insert(s.getAttribute("username").toString(), 1, "UPD"), "template/eye_ora.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "5 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 5, "UPD"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "5 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 5, "UPD"), "template/eye_ora.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "10 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 10, "UPD"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "10 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 10, "UPD"), "template/eye_ora.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "15 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 15, "UPD"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "15 Personnes modifiées", service.badge5Insert(s.getAttribute("username").toString(), 15, "UPD"), "template/eye_ora.png");
                 out.println("</div>");
                 out.println("</div>");
 
                 //Badges de suppression
                 out.println("<div class='row'>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "1 Personne supprimée", service.badge5Insert(s.getAttribute("username").toString(), 1, "DEL"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "1 Personne supprimée", service.badge5Insert(s.getAttribute("username").toString(), 1, "DEL"), "template/eye_red.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "5 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 5, "DEL"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "5 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 5, "DEL"), "template/eye_red.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "10 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 10, "DEL"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "10 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 10, "DEL"), "template/eye_red.png");
                 out.println("</div>");
                 out.println("<div class='col-sm-4 col-md-3'>");
-                HtmlHttpUtils.printBadge(out, "10 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 15, "DEL"), "template/eye_1.png");
+                HtmlHttpUtils.printBadge(out, "10 Personnes supprimées", service.badge5Insert(s.getAttribute("username").toString(), 15, "DEL"), "template/eye_red.png");
                 out.println("</div>");
                 out.println("</div>");
 

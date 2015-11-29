@@ -55,7 +55,7 @@ public class ServletFaireEffacementPersonne extends HttpServlet {
  
                 //PersonneDAO pdao = new PersonneDAO((SessionDB) s.getAttribute("sessionDB"));
                 //pdao.deletePerson(id);
-                service.removePersonne(id);
+                service.removePersonne(id,s.getAttribute("username").toString());
 
                 //Fermeture de la connexion
                 em.close();
