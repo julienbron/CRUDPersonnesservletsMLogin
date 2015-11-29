@@ -49,7 +49,7 @@ public class PersonService {
     
     //Get Collection Where
     public List<Person> findAllPersonWhere(String param) {
-        String query = "SELECT * FROM PERSONNE WHERE NOM LIKE '%" + param + "%' OR PRENOM LIKE '%" + param +"%' OR ADRESSE LIKE '%"+ param +"%' OR VILLE LIKE '%" + param + "%'  ORDER BY NUMERO DESC";
+        String query = "SELECT * FROM PERSONNE WHERE UPPER(NOM) LIKE '%" + param + "%' OR UPPER(PRENOM) LIKE '%" + param +"%' OR UPPER(ADRESSE) LIKE '%"+ param +"%' OR UPPER(VILLE) LIKE '%" + param + "%'  ORDER BY NUMERO DESC";
         return (List<Person>)em.createNativeQuery(query, ch.hegarc.technoactu.crudpersonnes.business.Person.class).getResultList();
     }
 
