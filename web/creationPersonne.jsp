@@ -18,14 +18,14 @@
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label" for="prenom">Prénom</label>  
                 <div class="col-md-4 col-sm-6">
-                    <input id="prenom" name="prenom" type="text" class="form-control input-md">
+                    <input id="prenom" name="prenom" type="text" required="true" class="form-control input-md">
                 </div>
             </div>
             
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label" for="nom">Nom</label>  
                 <div class="col-md-4 col-sm-6">
-                    <input id="nom" name="nom" type="text" class="form-control input-md">
+                    <input id="nom" name="nom" type="text" required="true" class="form-control input-md">
                 </div>
             </div>
 
@@ -33,14 +33,14 @@
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label" for="adresse">Adresse</label>  
                 <div class="col-md-4 col-sm-6">
-                    <input id="adresse" name="adresse" type="text" class="form-control input-md">
+                    <input id="adresse" name="adresse" type="text" required="true" class="form-control input-md">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label" for="ville">Ville</label>  
                 <div class="col-md-4 col-sm-6">
-                    <input id="ville" name="ville" type="text" class="form-control input-md">
+                    <input id="ville" name="ville" type="text" required="true" class="form-control input-md">
                 </div>
             </div>
 
